@@ -172,6 +172,8 @@ def do_setup(package_data):
             "Programming Language :: Python :: 3.6",
             "Programming Language :: Python :: 3.7",
             "Programming Language :: Python :: 3.8",
+            "Programming Language :: Python :: 3.9",
+            "Programming Language :: Python :: 3.10",
             "Topic :: Scientific/Engineering :: Artificial Intelligence",
         ],
         long_description=readme,
@@ -179,7 +181,7 @@ def do_setup(package_data):
         install_requires=[
             "cffi",
             "cython",
-            "hydra-core>=1.0.7,<1.1",
+            "hydra-core>=1.0.7",
             "omegaconf<2.1",
             "numpy>=1.21.3",
             "regex",
