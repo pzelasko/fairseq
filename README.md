@@ -70,7 +70,6 @@ We provide reference implementations of various sequence modeling papers:
 </p></details>
 
 ### What's New:
-* June 2022 [Released code for wav2vec-U 2.0 from Towards End-to-end Unsupervised Speech Recognition (Liu, et al., 2022)](examples/wav2vec/unsupervised/README.md)
 * May 2022 [Integration with xFormers](https://github.com/facebookresearch/xformers)
 * December 2021 [Released Direct speech-to-speech translation code](examples/speech_to_speech/README.md)
 * October 2021 [Released VideoCLIP and VLM models](examples/MMPT/README.md)
@@ -147,8 +146,8 @@ and [RoBERTa](https://pytorch.org/hub/pytorch_fairseq_roberta/) for more example
 
 # Requirements and Installation
 
-* [PyTorch](http://pytorch.org/) version >= 1.10.0
-* Python version >= 3.8
+* [PyTorch](http://pytorch.org/) version >= 1.5.0
+* Python version >= 3.6
 * For training new models, you'll also need an NVIDIA GPU and [NCCL](https://github.com/NVIDIA/nccl)
 * **To install fairseq** and develop locally:
 

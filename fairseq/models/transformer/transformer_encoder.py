@@ -8,22 +8,23 @@ from typing import Dict, List, Optional
 
 import torch
 import torch.nn as nn
-from torch import Tensor
-
 from fairseq import utils
 from fairseq.distributed import fsdp_wrap
 from fairseq.models import FairseqEncoder
-from fairseq.models.transformer import TransformerConfig
 from fairseq.modules import (
     FairseqDropout,
     LayerDropModuleList,
     LayerNorm,
     PositionalEmbedding,
     SinusoidalPositionalEmbedding,
-    transformer_layer,
 )
+from fairseq.modules import transformer_layer
 from fairseq.modules.checkpoint_activations import checkpoint_wrapper
 from fairseq.modules.quant_noise import quant_noise as apply_quant_noise_
+from torch import Tensor
+from fairseq.models.transformer import (
+    TransformerConfig,
+)
 
 
 # rewrite name for backward compatibility in `make_generation_fast_`
@@ -202,16 +203,13 @@ class TransformerEncoderBase(FairseqEncoder):
         """
         # compute padding mask
         encoder_padding_mask = src_tokens.eq(self.padding_idx)
-        has_pads: Tensor = (
-            torch.tensor(src_tokens.device.type == "xla") or encoder_padding_mask.any()
-        )
+        has_pads = src_tokens.device.type == "xla" or encoder_padding_mask.any()
 
         x, encoder_embedding = self.forward_embedding(src_tokens, token_embeddings)
 
         # account for padding while computing the representation
-        x = x * (
-            1 - encoder_padding_mask.unsqueeze(-1).type_as(x) * has_pads.type_as(x)
-        )
+        if has_pads:
+            x = x * (1 - encoder_padding_mask.unsqueeze(-1).type_as(x))
 
         # B x T x C -> T x B x C
         x = x.transpose(0, 1)
